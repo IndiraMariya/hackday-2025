@@ -1,166 +1,91 @@
-/* ===== Swipe layout (no Tailwind required) ===== */
-
-.sw-shell {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px 20px 40px;
+/* ===== Theme & base ===== */
+:root {
+    --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-.sw-pills {
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: var(--font-ui);
+    margin: 0;
+}
+
+/* ===== Auth (login) ===== */
+.screen {
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.screen--center {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-}
-
-.pill {
-    font: 600 13px var(--font-ui);
-    color: #9aa3b2;
-    background: #0e1116;
-    border: 1px solid #24272c;
-    border-radius: 999px;
-    padding: 8px 12px;
-    transition: all .18s ease;
-}
-
-.pill:hover {
-    color: #e6ebf3;
-    border-color: #3a3f47;
-}
-
-.pill--active {
-    color: #fff;
-    background: #1943e6;
-    border-color: #1943e6;
-}
-
-.sw-stage {
-    display: grid;
-    grid-template-columns: 80px 1fr 80px;
     align-items: center;
-    gap: 16px;
-    margin-top: 8px;
+    justify-content: center;
 }
 
-.sw-action {
-    height: 72px;
-    width: 72px;
-    border-radius: 18px;
-    border: 1px solid #24272c;
-    background: #0e1116;
-    color: #fff;
+.auth-hero {
+    text-align: center;
+    max-width: 420px;
+}
+
+.globe {
+    font-size: 72px;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+}
+
+.subtitle {
+    color: #9aa3b2;
+    margin: 0 0 32px;
+}
+
+.btn {
+    appearance: none;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border-radius: 999px;
+    font-weight: 600;
     transition: all .18s ease;
-    cursor: pointer;
 }
 
-.sw-action:hover {
-    border-color: #3a3f47;
+.btn--google {
+    background: #fff;
+    color: #000;
+    padding: 14px 22px;
+    gap: 10px;
 }
 
-.sw-action--nope:hover {
-    background: #2a1216;
-    color: #ff6b7a;
-    border-color: #4a1c22;
+.btn--google:hover {
+    background: #e9edf1;
 }
 
-.sw-action--like:hover {
-    background: #0d1f16;
-    color: #46ff9a;
-    border-color: #1e3a2d;
-}
-
-.sw-cardWrap {
-    position: relative;
-}
-
-.sw-empty {
-    height: 520px;
-    border-radius: 24px;
-    border: 1px dashed #2a2d33;
-    display: grid;
+.g-logo {
+    display: inline-grid;
     place-items: center;
-    color: #9aa3b2;
-}
-
-/* ----- Card ----- */
-
-.sw-card {
-    width: 520px;
-    border-radius: 24px;
-    overflow: hidden;
-    background: #0b0b0c;
-    border: 1px solid #1d1f23;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
-}
-
-.sw-card__hero {
-    height: 220px;
-    background: linear-gradient(135deg, #3b6fff 0%, #6a56ff 40%, #8b5cf6 70%, #6a00ff 100%);
-    display: grid;
-    place-items: center;
-}
-
-.sw-card__emoji {
-    font-size: 72px;
-    line-height: 1;
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .35));
-}
-
-.sw-card__body {
-    padding: 22px 22px 24px;
-}
-
-.sw-card__title {
-    font-size: 22px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
     font-weight: 800;
-    margin: 0 0 6px;
 }
 
-.sw-card__meta {
-    color: #9aa3b2;
-    font-size: 14px;
-    margin-bottom: 6px;
-}
-
-.sw-card__text {
-    color: #d2d7e0;
-    font-size: 15px;
-    line-height: 1.5;
-    margin: 4px 0 10px;
-}
-
-.sw-card__link {
-    color: #7db4ff;
-    font-size: 14px;
-    margin-top: 2px;
-}
-
-/* like / nope badge */
-.sw-badge {
-    position: absolute;
-    top: 14px;
-    padding: 8px 14px;
-    font: 800 18px var(--font-ui);
-    border-radius: 12px;
-    transform: rotate(10deg);
-}
-
-.sw-badge--like {
-    right: 14px;
-    background: #1f8e5a;
-    color: #e7fff4;
-}
-
-.sw-badge--nope {
-    left: 14px;
-    background: #b33a44;
-    color: #fff3f4;
-}
-
-/* ========== Top bar & segmented control ========== */
+/* ===== Top bar & segmented control ===== */
 .topbar {
     display: flex;
     align-items: center;
@@ -257,9 +182,7 @@
     transform: translateX(102px);
 }
 
-/* width/offset match two tabs */
-
-/* ========== Swipe layout (centered card + bottom actions) ========== */
+/* ===== Swipe layout (centered card + pills + actions) ===== */
 .sw-shell {
     max-width: 980px;
     margin: 0 auto;
@@ -371,7 +294,29 @@
     margin-top: 2px;
 }
 
-/* bottom circular buttons + floating add */
+/* like/nope badges (shown while dragging) */
+.sw-badge {
+    position: absolute;
+    top: 14px;
+    padding: 8px 14px;
+    font: 800 18px var(--font-ui);
+    border-radius: 12px;
+    transform: rotate(10deg);
+}
+
+.sw-badge--like {
+    right: 14px;
+    background: #1f8e5a;
+    color: #e7fff4;
+}
+
+.sw-badge--nope {
+    left: 14px;
+    background: #b33a44;
+    color: #fff3f4;
+}
+
+/* Bottom circular actions + floating add */
 .sw-actions {
     display: flex;
     gap: 28px;
@@ -429,29 +374,7 @@
     filter: brightness(1.06);
 }
 
-/* like/nope badge on drag */
-.sw-badge {
-    position: absolute;
-    top: 14px;
-    padding: 8px 14px;
-    font: 800 18px var(--font-ui);
-    border-radius: 12px;
-    transform: rotate(10deg);
-}
-
-.sw-badge--like {
-    right: 14px;
-    background: #1f8e5a;
-    color: #e7fff4;
-}
-
-.sw-badge--nope {
-    left: 14px;
-    background: #b33a44;
-    color: #fff3f4;
-}
-
-/* ===== Matches screen ===== */
+/* ===== Matches ===== */
 .matches-wrap {
     max-width: 980px;
     margin: 0 auto;
