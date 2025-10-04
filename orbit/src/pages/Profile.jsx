@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProfileView from "../components/profile/ProfileView";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import SettingsView from "../components/profile/SettingsView";
-import { loadProfile, saveProfile, uploadProfileImageIfNeeded } from "../lib/data";
+import { loadProfile, saveProfile } from "../lib/data";
 import useAuth from "../hooks/useAuth";
 
 export default function Profile() {

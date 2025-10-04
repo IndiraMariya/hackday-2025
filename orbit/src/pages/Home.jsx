@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { LogOut, Home as HomeIcon, MessageSquare } from "lucide-react";
+import {
+  LogOut,
+  Home as HomeIcon,
+  MessageSquare,
+  User as UserIcon,
+} from "lucide-react";
 import useAuth from "../hooks/useAuth";
 import SwipeScreen from "../features/swipe/SwipeScreen";
 import MatchesScreen from "../features/swipe/MatchesScreen";
@@ -8,7 +13,7 @@ import Profile from "./Profile";
 
 export default function Home() {
   const { signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState("swipe"); // "swipe" | "matches"
+  const [activeTab, setActiveTab] = useState("swipe"); // "swipe" | "matches" | "profile"
 
   return (
     <div className="screen">
@@ -18,12 +23,17 @@ export default function Home() {
           <div className="brand__logo">🌀</div>
           <div className="brand__name">Orbit</div>
         </div>
-        <button className="iconbtn" onClick={signOut} title="Sign out" aria-label="Sign out">
+        <button
+          className="iconbtn"
+          onClick={signOut}
+          title="Sign out"
+          aria-label="Sign out"
+        >
           <LogOut size={20} />
         </button>
       </header>
 
-      {/* Segmented control: Swipe / Matches */}
+      {/* Segmented control: Swipe / Matches / Profile */}
       <nav className="seg">
         <button
           className={`seg__btn ${activeTab === "swipe" ? "is-active" : ""}`}
@@ -32,6 +42,7 @@ export default function Home() {
           <HomeIcon size={18} />
           <span>Home</span>
         </button>
+
         <button
           className={`seg__btn ${activeTab === "matches" ? "is-active" : ""}`}
           onClick={() => setActiveTab("matches")}
@@ -39,16 +50,42 @@ export default function Home() {
           <MessageSquare size={18} />
           <span>Matches</span>
         </button>
-        <div className={`seg__bar ${activeTab === "matches" ? "seg__bar--right" : ""}`} />
+
+        <button
+          className={`seg__btn ${activeTab === "profile" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("profile")}
+        >
+          <UserIcon size={18} />
+          <span>Profile</span>
+        </button>
+
+        <div
+          className={`seg__bar ${
+            activeTab === "matches"
+              ? "seg__bar--mid"
+              : activeTab === "profile"
+              ? "seg__bar--right"
+              : ""
+          }`}
+        />
       </nav>
 
       {/* Content */}
       <main className="screen--center">
-        {activeTab === "swipe" ? (
+        {activeTab === "swipe" && (
           <SwipeScreen mockData={mockData} onMatch={() => {}} />
-        ) : (
-          <MatchesScreen matches={{ friends: [], clubs: [], events: [], studyGroups: [] }} />
         )}
+        {activeTab === "matches" && (
+          <MatchesScreen
+            matches={{
+              friends: [],
+              clubs: [],
+              events: [],
+              studyGroups: [],
+            }}
+          />
+        )}
+        {activeTab === "profile" && <Profile />}
       </main>
     </div>
   );
