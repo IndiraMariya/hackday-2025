@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LogOut, Home as HomeIcon, MessageSquare } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 import SwipeScreen from "../features/swipe/SwipeScreen";
@@ -7,7 +7,32 @@ import { mockData } from "../features/swipe/mockData";
 
 export default function Home() {
   const { signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState("swipe"); // "swipe" | "matches"
+  const [activeTab, setActiveTab] = useState("swipe");
+  const [seenCards, setSeenCards] = useState([]);
+  const [matches, setMatches] = useState({
+    friends: [],
+    clubs: [],
+    events: [],
+    studyGroups: [],
+  });
+
+  // ✅ Load saved data on mount
+  useEffect(() => {
+    const savedMatches = JSON.parse(localStorage.getItem("matches"));
+    const savedSeen = JSON.parse(localStorage.getItem("seenCards"));
+
+    if (savedMatches) setMatches(savedMatches);
+    if (savedSeen) setSeenCards(savedSeen);
+  }, []);
+
+  // ✅ Persist matches and seen cards automatically
+  useEffect(() => {
+    localStorage.setItem("matches", JSON.stringify(matches));
+  }, [matches]);
+
+  useEffect(() => {
+    localStorage.setItem("seenCards", JSON.stringify(seenCards));
+  }, [seenCards]);
 
   return (
     <div className="screen">
@@ -22,7 +47,7 @@ export default function Home() {
         </button>
       </header>
 
-      {/* Segmented control: Swipe / Matches */}
+      {/* Segmented control */}
       <nav className="seg">
         <button
           className={`seg__btn ${activeTab === "swipe" ? "is-active" : ""}`}
@@ -44,9 +69,19 @@ export default function Home() {
       {/* Content */}
       <main className="screen--center">
         {activeTab === "swipe" ? (
-          <SwipeScreen mockData={mockData} onMatch={() => {}} />
+          <SwipeScreen
+            mockData={mockData}
+            onMatch={(category, item) =>
+              setMatches((prev) => ({
+                ...prev,
+                [category]: [...(prev[category] || []), item],
+              }))
+            }
+            seenCards={seenCards}
+            setSeenCards={setSeenCards}
+          />
         ) : (
-          <MatchesScreen matches={{ friends: [], clubs: [], events: [], studyGroups: [] }} />
+          <MatchesScreen matches={matches} />
         )}
       </main>
     </div>

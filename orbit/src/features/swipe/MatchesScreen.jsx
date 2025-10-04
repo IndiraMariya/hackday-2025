@@ -5,17 +5,13 @@ export default function MatchesScreen({ matches }) {
   const [activeCategory, setActiveCategory] = useState("friends");
   const categories = ["friends", "clubs", "events", "studyGroups"];
 
+  // get matches for selected category
   const list = matches?.[activeCategory] || [];
 
   const label = (cat) =>
     cat === "studyGroups" ? "Study Groups" : cat.charAt(0).toUpperCase() + cat.slice(1);
 
-  const count = (cat) => (matches?.[cat]?.length || 0);
-
-  const onConnect = (item) => {
-    // hook up later (open chat / copy handle / etc.)
-    console.log("Connect with:", item);
-  };
+  const count = (cat) => matches?.[cat]?.length || 0;
 
   return (
     <div className="matches-wrap">
@@ -27,32 +23,33 @@ export default function MatchesScreen({ matches }) {
             className={`pill ${activeCategory === cat ? "pill--active" : ""}`}
             onClick={() => setActiveCategory(cat)}
           >
-            {label(cat)} ({count(cat)})
+            {label(cat)} <span className="pill-count">{count(cat)}</span>
           </button>
         ))}
       </div>
 
-      {/* list */}
+      {/* display matches */}
       {list.length === 0 ? (
         <div className="matches-empty">
           <Heart size={48} className="matches-empty__icon" />
-          <p>No matches yet. Start swiping!</p>
+          <p>No matches yet 💔</p>
+          <p className="matches-empty__text">Swipe right to connect!</p>
         </div>
       ) : (
         <div className="matches-list">
           {list.map((item) => (
-            <div key={item.id} className="match-item">
+            <div key={item.id} className="match-card">
               <div className="match-emoji">{item.image || "🧑‍🎓"}</div>
+
               <div className="match-body">
-                <div className="match-title">{item.name}</div>
-                <div className="match-meta">
+                <h3 className="match-name">{item.name}</h3>
+                <p className="match-meta">
                   {item.major || item.category || item.course || item.date}
-                </div>
-                {item.description && <div className="match-desc">{item.description}</div>}
+                </p>
+                <p className="match-desc">
+                  {item.description || item.bio || ""}
+                </p>
               </div>
-              <button className="match-cta" onClick={() => onConnect(item)}>
-                Connect
-              </button>
             </div>
           ))}
         </div>
