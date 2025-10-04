@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import SwipeScreen from "../features/swipe/SwipeScreen";
 import MatchesScreen from "../features/swipe/MatchesScreen";
 import { mockData } from "../features/swipe/mockData";
+import Profile from "./Profile";
 
 export default function Home() {
   const { signOut } = useAuth();
