@@ -6,7 +6,7 @@ import MatchesScreen from "../features/swipe/MatchesScreen";
 import { mockData } from "../features/swipe/mockData";
 
 export default function Home() {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState("swipe");
   const [seenCards, setSeenCards] = useState([]);
   const [matches, setMatches] = useState({
@@ -34,6 +34,10 @@ export default function Home() {
     localStorage.setItem("seenCards", JSON.stringify(seenCards));
   }, [seenCards]);
 
+  // ✅ Extract display name or fallback
+  const displayName =
+    user?.displayName || user?.email?.split("@")[0] || "Student";
+
   return (
     <div className="screen">
       {/* Top bar */}
@@ -42,10 +46,22 @@ export default function Home() {
           <div className="brand__logo">🌀</div>
           <div className="brand__name">Orbit</div>
         </div>
-        <button className="iconbtn" onClick={signOut} title="Sign out" aria-label="Sign out">
+        <button
+          className="iconbtn"
+          onClick={signOut}
+          title="Sign out"
+          aria-label="Sign out"
+        >
           <LogOut size={20} />
         </button>
       </header>
+
+      {/* Greeting */}
+      <div className="greeting">
+        <h2>
+          Hello, <span className="username">{displayName}</span> 👋
+        </h2>
+      </div>
 
       {/* Segmented control */}
       <nav className="seg">
@@ -63,7 +79,11 @@ export default function Home() {
           <MessageSquare size={18} />
           <span>Matches</span>
         </button>
-        <div className={`seg__bar ${activeTab === "matches" ? "seg__bar--right" : ""}`} />
+        <div
+          className={`seg__bar ${
+            activeTab === "matches" ? "seg__bar--right" : ""
+          }`}
+        />
       </nav>
 
       {/* Content */}
