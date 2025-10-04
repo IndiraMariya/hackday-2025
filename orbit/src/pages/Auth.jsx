@@ -17,7 +17,7 @@ export default function Auth() {
     <div className="screen screen--center">
       <div className="auth-hero">
         <div className="globe" aria-hidden>🌍</div>
-        <h1 className="title">Orbit</h1>
+        <h1 className="title">ORBIT</h1>
         <p className="subtitle">Connect with your campus universe</p>
 
         <button className="btn btn--google" onClick={handleGoogleSignIn}>
